@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-space"
+version = "0.1.0"
+description = "Batteries-included agent toolkit built on AG2"
+authors = [{name = "Agent Space", email = "example@example.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ag2>=0.0.9,<1.0.0",
+    "pydantic>=2.0",
+    "typing-extensions",
+    "typer[all]",
+    "rich",
+]
+
+[project.optional-dependencies]
+rag = ["chromadb", "faiss-cpu", "qdrant-client"]
+browser = ["browser-use", "playwright"]
+google = ["google-api-python-client", "google-auth-oauthlib"]
+realtime = ["fastapi", "uvicorn", "jinja2"]
+otel = ["opentelemetry-sdk"]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "mypy",
+    "ruff",
+    "black",
+    "mkdocs",
+    "mkdocstrings[python]",
+    "mkdocs-material",
+]
+all = [
+    "agent-space[rag,browser,google,realtime,otel,dev]",
+]
+
+[project.urls]
+Homepage = "https://example.com"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_space"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+mypy_path = "src"
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+
