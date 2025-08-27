@@ -6,6 +6,7 @@ import typer
 
 from . import agents, providers, tools
 from .memory import VectorStore
+from .ui import interactive
 
 app = typer.Typer(help="Agent Space CLI")
 
@@ -39,6 +40,13 @@ def run(pattern: str, input: str, provider: str = "openai") -> None:
     else:
         raise typer.BadParameter("unknown pattern")
     typer.echo(agent.run(input).text)
+
+
+@app.command()
+def ui() -> None:
+    """Launch a simple interactive UI for building and running agents."""
+
+    interactive()
 
 
 __all__ = ["app"]
